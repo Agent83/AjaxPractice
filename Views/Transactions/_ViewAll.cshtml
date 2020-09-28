@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ToDoList.Models.Transaction>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BeneficiaryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th><a onclick="showInPopup('@Url.Action("AddOrEdit","Transactions",new { id = 0 },Context.Request.Scheme)','New Transaction')" class="btn btn-success text-white"><i class="fa fa-random"></i> New Transacton</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeneficiaryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Transactions",new { id = item.TransactionId },Context.Request.Scheme)','Update Transaction')" class="btn btn-info text-white"><i class="fa fa-pencil"></i>Edit</a>
+                    <form asp-action="Delete" asp-route-id="@item.TransactionId" onsubmit="return jQueryAjaxDelete(this);" class="d-inline">
+                        <input type="submit" value="Delete" class="btn btn-danger"/>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
